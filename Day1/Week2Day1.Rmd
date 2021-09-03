@@ -1,0 +1,42 @@
+---
+title: "Week2Day1"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+install.packages("tidyverse")
+library(tidyverse)
+
+data<-read_csv("data/NHLdata.csv")
+```
+```{r}
+data%>%slice(1:3)%>% select(1:10)
+```
+
+```{r}
+data %>% filter( x > 10) %>% select(Player, Age, Tm, FOWpct) -> goals
+```
+
+```{r}
+x <- 2
+data %>% mutate(FOWpct= FOW/(FOW+FOL)) -> data
+data %>% mutate(totalPTS = G+A) ->data
+```
+
+```{r}
+data %>% arrange(desc(FOWpct)) %>% select(Player, Age, Tm, FOWpct) %>% head(10)
+```
+
+```{r}
+data %>% group_by(Tm) %>% summarize( mean_PTS = mean(totalPTS), mean_FOWpct = mean(FOWpct), mean_s = mean(S)) -> nhl_teams
+```
+
+
+```{r}
+data %>% write_csv(path = "data/newNHLdata.csv")
+```
+

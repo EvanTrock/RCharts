@@ -1,0 +1,52 @@
+---
+title: "Day5"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(BasketballAnalyzeR)
+```
+
+
+```{r}
+shot_chart_2005 <-read.csv("Data/nba200506PbPshots.csv")
+shot_chart_2010 <-read.csv("Data/nba201011PbPshots.csv")
+shot_chart_2015 <-read.csv("Data/nba201516PbPshots(1).csv")
+```
+
+```{r}
+shot_chart_2005 <- PbPmanipulation(shot_chart_2005)
+shot_chart_2010 <- PbPmanipulation(shot_chart_2010)
+shot_chart_2015 <- PbPmanipulation(shot_chart_2015)
+
+```
+
+
+```{r}
+shot_chart_2005 %>% mutate(xx=original_x/10, yy=original_y/10-41.75) ->  shot_chart_2005
+shot_chart_2010 %>% mutate(xx=original_x/10, yy=original_y/10-41.75) ->  shot_chart_2010
+shot_chart_2015 %>% mutate(xx=original_x/10, yy=original_y/10-41.75) ->  shot_chart_2015
+
+```
+
+
+```{r}
+shot_chart_2005 %>% filter(team=="NYK") ->shot_chart_2005_NYK
+shot_chart_2010 %>% filter(team=="NYK") -> shot_chart_2010_NYK
+shot_chart_2015 %>% filter(team=="NYK") -> shot_chart_2015_NYK
+```
+
+
+```{r}
+shotchart(data=shot_chart_2005_NYK, x="xx", y="yy", z= "playlength", num.sect=5, type="sectors", scatter= FALSE, result= "result", text.col = "black")
+shotchart(data=shot_chart_2010_NYK, x="xx", y="yy", z= "playlength", num.sect=5, type="sectors", scatter= FALSE, result= "result", text.col = "black")
+shotchart(data=shot_chart_2015_NYK, x="xx", y="yy", z= "playlength", num.sect=5, type="sectors", scatter= FALSE, result= "result", text.col = "black")
+
+
+```
+

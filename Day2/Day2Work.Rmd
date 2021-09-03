@@ -1,0 +1,38 @@
+---
+title: "Week2Day2"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+
+data <- read_csv("Data/teamMisc.csv")
+```
+
+```{r}
+data %>% filter(Year > 2016) %>%
+    select (Tm, Year, OeFGPerc, OTOVPerc, ORBPerc, OFTPerFGA, DeFGPerc, DTOVPerc, DRBPerc,DFTPerFGA) -> data_2017_2019
+
+data_2017_2019
+```
+```{r}
+data_2017_2019_avg <- data_2017_2019 %>% group_by(Tm) %>%
+  summarize(OeFG = mean(OeFGPerc),
+            OTOV=mean(OTOVPerc),
+            ORB=mean(ORBPerc),
+            OFTr=mean(OFTPerFGA),
+            DeFG=mean(DeFGPerc),
+            DTOV=mean(DTOVPerc),
+            DRB=mean(DRBPerc),
+            DFTr=mean(DFTPerFGA))
+
+data_2017_2019_avg
+```
+```{r}
+data_2017_2019_avg %>% write_csv("data_2017_2019_avg.csv")
+```
+

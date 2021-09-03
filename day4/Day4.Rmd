@@ -1,0 +1,40 @@
+---
+title: "Day4"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+#install.packages("BasketballAnalyzeR")
+library(BasketballAnalyzeR)
+
+```
+
+```{r}
+nba201516PbPShots <-read.csv("data/nba201516PbPShots.csv")
+
+nba201516PbPShots <- PbPmanipulation(nba201516PbPShots)
+nba201516PbPShots %>% mutate(xx=original_x/10, yy=original_y/10-41.75) ->nba201516PbPShots
+```
+
+
+```{r}
+nba201516PbPShots %>% filter(player=="Julius Randle") ->juliusRandle
+nba201516PbPShots %>% filter(player=="Carmelo Anthony") ->carmeloAnthony
+nba201516PbPShots %>% filter(player=="Stephen Curry") ->stephCurry
+nba201516PbPShots %>% filter(player=="Kyrie Irving") -> kyrieIrving
+nba201516PbPShots %>% filter(player=="Chris Bosh") ->chrisBosh
+
+
+shotchart(data=juliusRandle, x="xx", y="yy", z= "points", scatter= TRUE  )
+shotchart(data=carmeloAnthony, x="xx", y="yy", z= "points", scatter= TRUE  )
+shotchart(data=stephCurry, x="xx", y="yy", z= "points", scatter= TRUE  )
+shotchart(data=kyrieIrving, x="xx", y="yy", z= "points", scatter= TRUE  )
+shotchart(data=chrisBosh, x="xx", y="yy", z= "points", scatter= TRUE  )
+
+```
+
